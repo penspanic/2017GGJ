@@ -73,6 +73,8 @@ public class Character : MonoBehaviour, ITouchable
 
     public void OnTouch()
     {
+        return;
+
         if (isDelivered == true || isProtester == true || stageMgr.IsGameEnd == true)
             return;
 
@@ -92,5 +94,17 @@ public class Character : MonoBehaviour, ITouchable
         {
             StopCoroutine(TalkProcess(-1));
         }
+    }
+
+    public void MakeInstigater()
+    {
+        if(isProtester == true)
+        {
+            return;
+        }
+
+        isInstigator = true;
+
+        GetComponent<CharacterVarietyController>().ChangeToAgent();
     }
 }

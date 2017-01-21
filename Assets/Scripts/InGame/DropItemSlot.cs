@@ -24,7 +24,7 @@ public class DropItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     public void OnDrop(PointerEventData data)
     {
-        Debug.Log("ItemDroped" + " " + gameObject.name);
+        GetComponent<Character>().MakeInstigater();
     }
 
     public void OnPointerEnter(PointerEventData data)

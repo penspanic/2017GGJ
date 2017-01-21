@@ -24,7 +24,11 @@ public class StageManager : MonoBehaviour
 
     IEnumerator StartProcess()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+
+        characters[0].MakeInstigater();
+
+        yield return new WaitForSeconds(1f);
 
         IsGameEnd = false;
         OnCharacterTouch(characters[0], mapMgr.currentMapData.MaxDeliverCount);
@@ -36,6 +40,7 @@ public class StageManager : MonoBehaviour
     {
         while (true)
         {
+
             yield return new WaitForSeconds(5f);
 
             if (IsGameEnd == true)
