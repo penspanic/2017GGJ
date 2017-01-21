@@ -22,7 +22,11 @@ public class ItemManager : Singleton<ItemManager>
 
     public static readonly int InstigatorItemCost = 100;
     public static readonly int KillItemCost = 200;
-    int currentRemainCash = 0;
+    public int currentRemainCash
+    {
+        get;
+        private set;
+    }
 
     Text remainMoneyText;
 
@@ -50,5 +54,18 @@ public class ItemManager : Singleton<ItemManager>
         currentRemainCash = cash;
 
         remainMoneyText.text = cash.ToString();
+    }
+
+    public void UseItemCost(ItemType type)
+    {
+        if (type == ItemType.Instigator)
+            currentRemainCash -= InstigatorItemCost;
+        else if (type == ItemType.Kill)
+            currentRemainCash -= KillItemCost;
+
+        if (currentRemainCash < 0)
+            currentRemainCash = 0;
+
+        remainMoneyText.text = currentRemainCash.ToString();
     }
 }

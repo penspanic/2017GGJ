@@ -47,16 +47,12 @@ public class DragItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (ItemManager.Instance.IsSelected())
-            return;
         if (m_DraggingIcons[eventData.pointerId] != null)
             SetDraggedPosition(eventData);
     }
 
     private void SetDraggedPosition(PointerEventData eventData)
     {
-        if (ItemManager.Instance.IsSelected())
-            return;
         if (dragOnSurfaces && eventData.pointerEnter != null && eventData.pointerEnter.transform as RectTransform != null)
             m_DraggingPlanes[eventData.pointerId] = eventData.pointerEnter.transform as RectTransform;
 
@@ -71,9 +67,6 @@ public class DragItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (ItemManager.Instance.IsSelected())
-            return;
-
         ItemManager.Instance.TurnItem(ItemType.None);
 
         if (m_DraggingIcons[eventData.pointerId] != null)

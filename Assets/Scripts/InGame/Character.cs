@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Character : MonoBehaviour, ITouchable
+public class Character : MonoBehaviour
 {
     public bool isDelivered
     {
@@ -54,7 +54,7 @@ public class Character : MonoBehaviour, ITouchable
 
         float time = Random.Range(minBallonDisappearTime, maxBallonDisappearTime);
 
-        ballon.Show("dadss", time);
+        ballon.Show("-----", time);
 
         yield return new WaitForSeconds(time);
 
@@ -77,16 +77,6 @@ public class Character : MonoBehaviour, ITouchable
         return false;
     }
 
-    public void OnTouch()
-    {
-        return;
-
-        if (isDelivered == true || isProtester == true || stageMgr.IsGameEnd == true)
-            return;
-
-        stageMgr.OnCharacterTouch(this, maxDeliverCount);
-    }
-
     public void SetCharacterType(CellType cell)
     {
         isProtester = cell == CellType.Protester;
@@ -102,15 +92,32 @@ public class Character : MonoBehaviour, ITouchable
         }
     }
 
-    public void MakeInstigater()
+    public bool MakeInstigater()
     {
         if(isProtester == true)
         {
-            return;
+            return false;
         }
 
         isInstigator = true;
 
         GetComponent<CharacterVarietyController>().ChangeToAgent();
+
+        return true;
+    }
+
+    public bool KillAndChange()
+    {
+        if (isInstigator == true || isProtester == false)
+        {
+            return false;
+        }
+
+        isInstigator = true;
+        isProtester = false;
+
+        GetComponent<CharacterVarietyController>().ChangeToAgent();
+
+        return true;
     }
 }

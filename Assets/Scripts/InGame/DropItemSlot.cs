@@ -24,7 +24,22 @@ public class DropItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     public void OnDrop(PointerEventData data)
     {
-        GetComponent<Character>().MakeInstigater();
+        if(ItemManager.Instance.currentSelect == ItemType.Instigator)
+        {
+            if (ItemManager.Instance.currentRemainCash >= ItemManager.InstigatorItemCost)
+            {
+                if(GetComponent<Character>().MakeInstigater() == true)
+                    ItemManager.Instance.UseItemCost(ItemType.Instigator);
+            }
+        }
+        else if(ItemManager.Instance.currentSelect == ItemType.Kill)
+        {
+            if(ItemManager.Instance.currentRemainCash >= ItemManager.KillItemCost)
+            {
+                if (GetComponent<Character>().KillAndChange() == true)
+                    ItemManager.Instance.UseItemCost(ItemType.Kill);
+            }
+        }
     }
 
     public void OnPointerEnter(PointerEventData data)
