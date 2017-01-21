@@ -4,6 +4,6 @@ using UnityEngine;
 public enum ITEMSTATE
 {
 	MONEY,
-	GOLD
-	
+	GOLD,
+	NONE
 }

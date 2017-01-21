@@ -37,7 +37,10 @@ public class StageManager : MonoBehaviour
 
         characters = charcterList.ToArray();
     }
-
+    public float GetDeliveredRate()
+    {
+        return 0.5f;
+    }
     public void OnCharacterTouch(Character target, int deliverRemainCount)
     {
         if(deliverRemainCount == 0)
@@ -59,10 +62,5 @@ public class StageManager : MonoBehaviour
                 eachCharacter.Talk(deliverRemainCount - 1);
             }
         }
-    }
-
-    public float GetDeliveredRate()
-    {
-        return 0.5f;
     }
 }

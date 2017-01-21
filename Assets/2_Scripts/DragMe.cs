@@ -13,6 +13,8 @@ public class DragMe : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
+		if (ItemManager.Instance.IsSelected())
+		return;
 		var canvas = FindInParents<Canvas>(gameObject);
 		if (canvas == null)
 			return;
@@ -43,12 +45,16 @@ public class DragMe : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
 	public void OnDrag(PointerEventData eventData)
 	{
+		if (ItemManager.Instance.IsSelected())
+		return;
 		if (m_DraggingIcons[eventData.pointerId] != null)
 			SetDraggedPosition(eventData);
 	}
 
 	private void SetDraggedPosition(PointerEventData eventData)
 	{
+		if (ItemManager.Instance.IsSelected())
+		return;
 		if (dragOnSurfaces && eventData.pointerEnter != null && eventData.pointerEnter.transform as RectTransform != null)
 			m_DraggingPlanes[eventData.pointerId] = eventData.pointerEnter.transform as RectTransform;
 		
@@ -63,6 +69,8 @@ public class DragMe : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
+		if (ItemManager.Instance.IsSelected())
+		return;
 		if (m_DraggingIcons[eventData.pointerId] != null)
 			Destroy(m_DraggingIcons[eventData.pointerId]);
 
