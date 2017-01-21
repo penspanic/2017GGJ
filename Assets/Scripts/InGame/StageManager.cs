@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class StageManager : MonoBehaviour
 {
     Character[] characters;
+    MapManager mapMgr;
 
     public bool IsGameEnd
     {
@@ -14,39 +15,16 @@ public class StageManager : MonoBehaviour
 
     void Awake()
     {
-        CreateCharacters();
+        mapMgr = GameObject.FindObjectOfType<MapManager>();
+        characters = mapMgr.CreateCharacters();
     }
 
-    void CreateCharacters()
-    {
-        GameObject characterPrefab = Resources.Load<GameObject>("Prefab/Character");
-        List<Character> charcterList = new List<Character>();
-        for(int x = 0; x < 10; ++x)
-        {
-            for(int y = 0; y < 12; ++y)
-            {
-                GameObject character = Instantiate(characterPrefab);
-
-                Vector3 createPos = new Vector3(-3.16f + 0.7f * x, -4.08f + 0.9f * y, 0);
-
-                character.transform.position = createPos;
-
-                charcterList.Add(character.GetComponent<Character>());
-            }
-        }
-
-        characters = charcterList.ToArray();
-    }
-    public float GetDeliveredRate()
-    {
-        return 0.5f;
-    }
     public void OnCharacterTouch(Character target, int deliverRemainCount)
     {
         if(deliverRemainCount == 0)
-        {
             return;
-        }
+        if (target.isProtester == true)
+            return;
 
         foreach(Character eachCharacter in characters)
         {
@@ -62,5 +40,25 @@ public class StageManager : MonoBehaviour
                 eachCharacter.Talk(deliverRemainCount - 1);
             }
         }
+    }
+
+    public float GetDeliveredRate()
+    {
+        int normalCharacterCount = 0;
+        int deliveredCharacterCount = 0;
+        foreach(Character eachCharacter in characters)
+        {
+            if(eachCharacter.isProtester == true)
+            {
+                continue;
+            }
+            ++normalCharacterCount;
+            if(eachCharacter.isDelivered)
+            {
+                deliveredCharacterCount++;
+            }
+        }
+
+        return (float)deliveredCharacterCount / (float)normalCharacterCount;
     }
 }

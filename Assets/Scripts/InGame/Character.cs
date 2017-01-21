@@ -8,6 +8,11 @@ public class Character : MonoBehaviour, ITouchable
         get;
         private set;
     }
+    public bool isProtester
+    {
+        get;
+        private set;
+    }
 
     public int maxDeliverCount;
     public bool isAmplier;
@@ -33,7 +38,7 @@ public class Character : MonoBehaviour, ITouchable
 
     public void Talk(int deliverCount)
     {
-        if(isDelivered == true || this.gameObject.activeSelf == false)
+        if(isDelivered == true || isProtester == true || this.gameObject.activeSelf == false)
         {
             return;
         }
@@ -69,6 +74,9 @@ public class Character : MonoBehaviour, ITouchable
 
     public bool IsInDeliverRange(Character target)
     {
+        if (this.gameObject.activeSelf == false)
+            return false;
+
         if ((target.transform.position - this.transform.position).magnitude < deliverDistance)
             return true;
 
@@ -77,9 +85,14 @@ public class Character : MonoBehaviour, ITouchable
 
     public void OnTouch()
     {
-        if (isDelivered == true)
+        if (isDelivered == true || isProtester == true || stageMgr.IsGameEnd == true)
             return;
 
         stageMgr.OnCharacterTouch(this, maxDeliverCount);
+    }
+
+    public void SetCharacterType(CellType cell)
+    {
+        isProtester = cell == CellType.Protester;
     }
 }
