@@ -15,14 +15,15 @@ public class Character : MonoBehaviour, ITouchable
     }
 
     public int maxDeliverCount;
-    public bool isAmplier;
+    public bool isInstigator;
 
     private const float deliverDistance = 1f;
-    private const float minBallonDisappearTime = 0.7f;
-    private const float maxBallonDisappearTime = 1.5f;
+    private const float minBallonDisappearTime = 0.6f;
+    private const float maxBallonDisappearTime = 0.9f;
     static StageManager stageMgr;
 
     private SpriteRenderer ballonSprRenderer;
+    private Ballon ballon;
     void Awake()
     {
         if(stageMgr == null)
@@ -30,15 +31,14 @@ public class Character : MonoBehaviour, ITouchable
             stageMgr = GameObject.FindObjectOfType<StageManager>();
         }
 
-        ballonSprRenderer = transform.FindChild("Ballon").GetComponent<SpriteRenderer>();
-        ballonSprRenderer.enabled = false;
+        ballon = transform.FindChild("Ballon").GetComponent<Ballon>();
 
         isDelivered = false;
     }
 
     public void Talk(int deliverCount)
     {
-        if(isDelivered == true || isProtester == true || this.gameObject.activeSelf == false)
+        if(isDelivered == true || isProtester == true)
         {
             return;
         }
@@ -53,23 +53,11 @@ public class Character : MonoBehaviour, ITouchable
 
         float time = Random.Range(minBallonDisappearTime, maxBallonDisappearTime);
 
-        float elapsedTime = 0f;
-        ballonSprRenderer.enabled = true;
+        ballon.Show("dadss", time);
 
         yield return new WaitForSeconds(time);
 
-        time = 0.3f;
-        while(elapsedTime < time)
-        {
-            elapsedTime += Time.deltaTime;
-
-            ballonSprRenderer.color = new Color(1, 1, 1, 1f - elapsedTime / time);
-
-            yield return null;
-        }
-
-        stageMgr.OnCharacterTouch(this, isAmplier ? maxDeliverCount : deliverCount);
-        gameObject.SetActive(false);
+        stageMgr.OnCharacterTouch(this, isInstigator ? maxDeliverCount : deliverCount);
     }
 
     public bool IsInDeliverRange(Character target)
@@ -94,5 +82,15 @@ public class Character : MonoBehaviour, ITouchable
     public void SetCharacterType(CellType cell)
     {
         isProtester = cell == CellType.Protester;
+    }
+
+    public void SetDeliveredState(bool state)
+    {
+        isDelivered = state;
+
+        if(isDelivered == false)
+        {
+            StopCoroutine(TalkProcess(-1));
+        }
     }
 }

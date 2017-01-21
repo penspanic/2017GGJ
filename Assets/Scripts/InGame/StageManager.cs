@@ -17,11 +17,45 @@ public class StageManager : MonoBehaviour
     {
         mapMgr = GameObject.FindObjectOfType<MapManager>();
         characters = mapMgr.CreateCharacters();
+        ItemManager.Instance.SetCash(mapMgr.currentMapData.UsableCash);
+
+        StartCoroutine(StartProcess());
+    }
+
+    IEnumerator StartProcess()
+    {
+        yield return new WaitForSeconds(2f);
+
+        IsGameEnd = false;
+        OnCharacterTouch(characters[0], mapMgr.currentMapData.MaxDeliverCount);
+
+        StartCoroutine(DeliverProcess());
+    }
+
+    IEnumerator DeliverProcess()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+
+            if (IsGameEnd == true)
+            {
+                yield break;
+            }
+
+            foreach(Character eachCharacter in characters)
+            {
+                eachCharacter.SetDeliveredState(false);
+            }
+
+            OnCharacterTouch(characters[0], mapMgr.currentMapData.MaxDeliverCount);
+        }
+
     }
 
     public void OnCharacterTouch(Character target, int deliverRemainCount)
     {
-        if(deliverRemainCount == 0)
+        if(deliverRemainCount == -1)
             return;
         if (target.isProtester == true)
             return;
@@ -32,8 +66,6 @@ public class StageManager : MonoBehaviour
                 continue;
             if (eachCharacter.isDelivered == true)
                 continue;
-
-            target.gameObject.SetActive(false);
 
             if (eachCharacter.IsInDeliverRange(target) == true)
             {

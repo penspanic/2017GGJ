@@ -13,6 +13,7 @@ public struct MapData
 {
     public int StageNum;
     public int MaxDeliverCount;
+    public int UsableCash;
     public int[,] CellData;
 }
 
@@ -21,6 +22,7 @@ public class MapManager : MonoBehaviour
     public TextAsset mapDataFile;
 
     List<MapData> stageMapDataList = new List<MapData>();
+    public MapData currentMapData;
     void Awake()
     {
 
@@ -36,6 +38,7 @@ public class MapManager : MonoBehaviour
             MapData newData = new MapData();
             newData.StageNum = int.Parse(dataObject["Stage"][i]["StageNum"].ToString());
             newData.MaxDeliverCount = int.Parse(dataObject["Stage"][i]["MaxDeliverCount"].ToString());
+            newData.UsableCash = int.Parse(dataObject["Stage"][i]["UsableCash"].ToString());
 
             JsonData mapDataObject = dataObject["Stage"][i]["MapData"];
 
@@ -61,7 +64,7 @@ public class MapManager : MonoBehaviour
     {
         LoadMaps();
 
-        MapData mapData = stageMapDataList[GameManager.instance.selectedStageNum - 1];
+        currentMapData = stageMapDataList[GameManager.instance.selectedStageNum - 1];
         GameObject characterPrefab = Resources.Load<GameObject>("Prefab/Character");
         List<Character> characterList = new List<Character>();
         for (int x = 0; x < 10; ++x)
@@ -73,7 +76,7 @@ public class MapManager : MonoBehaviour
                 Vector3 createPos = new Vector3(-3.16f + 0.7f * x, 5f - 0.9f * y, 0);
                 character.transform.position = createPos;
 
-                character.SetCharacterType((CellType)mapData.CellData[x,y]);
+                character.SetCharacterType((CellType)currentMapData.CellData[x,y]);
 
                 characterList.Add(character);
             }
