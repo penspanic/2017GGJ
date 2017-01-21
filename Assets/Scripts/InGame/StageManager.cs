@@ -23,11 +23,11 @@ public class StageManager : MonoBehaviour
         List<Character> charcterList = new List<Character>();
         for(int x = 0; x < 10; ++x)
         {
-            for(int y = 0; y< 14; ++y)
+            for(int y = 0; y < 12; ++y)
             {
                 GameObject character = Instantiate(characterPrefab);
 
-                Vector3 createPos = new Vector3(-3.16f + 0.7f * x, -5.88f + 0.9f * y, 0);
+                Vector3 createPos = new Vector3(-3.16f + 0.7f * x, -4.08f + 0.9f * y, 0);
 
                 character.transform.position = createPos;
 
@@ -59,5 +59,10 @@ public class StageManager : MonoBehaviour
                 eachCharacter.Talk(deliverRemainCount - 1);
             }
         }
+    }
+
+    public float GetDeliveredRate()
+    {
+        return 0.5f;
     }
 }
