@@ -25,8 +25,6 @@ public class Ballon : MonoBehaviour
 
         wordText.text = word;
 
-        StopCoroutine(ShowProcess(-1f));
-
         StartCoroutine(ShowProcess(disappearTime));
     }
 

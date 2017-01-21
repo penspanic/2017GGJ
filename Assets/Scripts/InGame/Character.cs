@@ -50,6 +50,7 @@ public class Character : MonoBehaviour, ITouchable
 
     private IEnumerator TalkProcess(int deliverCount)
     {
+        stageMgr.deliverUpdated = true;
 
         float time = Random.Range(minBallonDisappearTime, maxBallonDisappearTime);
 
@@ -58,6 +59,11 @@ public class Character : MonoBehaviour, ITouchable
         yield return new WaitForSeconds(time);
 
         stageMgr.OnCharacterTouch(this, isInstigator ? maxDeliverCount : deliverCount);
+
+        yield return new WaitForSeconds(0.5f);
+
+        if(isInstigator == false)
+            GetComponent<CharacterVarietyController>().ChangeToRedType();
     }
 
     public bool IsInDeliverRange(Character target)

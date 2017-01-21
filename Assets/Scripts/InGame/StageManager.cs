@@ -13,6 +13,7 @@ public class StageManager : MonoBehaviour
         private set;
     }
 
+    public bool deliverUpdated;
     void Awake()
     {
         mapMgr = GameObject.FindObjectOfType<MapManager>();
@@ -40,20 +41,28 @@ public class StageManager : MonoBehaviour
     {
         while (true)
         {
-
-            yield return new WaitForSeconds(5f);
-
-            if (IsGameEnd == true)
+            if(deliverUpdated == true)
             {
-                yield break;
-            }
+                deliverUpdated = false;
 
-            foreach(Character eachCharacter in characters)
-            {
-                eachCharacter.SetDeliveredState(false);
-            }
+                yield return new WaitForSeconds(2f);
 
-            OnCharacterTouch(characters[0], mapMgr.currentMapData.MaxDeliverCount);
+                if(IsGameEnd == true)
+                {
+                    yield break;
+                }
+
+                if(deliverUpdated == false)
+                {
+                    foreach (Character eachCharacter in characters)
+                    {
+                        eachCharacter.SetDeliveredState(false);
+                    }
+
+                    OnCharacterTouch(characters[0], mapMgr.currentMapData.MaxDeliverCount);
+                }
+            }
+            yield return null;
         }
 
     }

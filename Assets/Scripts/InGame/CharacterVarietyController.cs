@@ -74,6 +74,18 @@ public class CharacterVarietyController : MonoBehaviour
         pantsRenderer.sprite = Resources.Load<Sprite>("국장/leg");
     }
 
+    public void ChangeToRedType()
+    {
+        bodyRenderer.sprite = Resources.Load<Sprite>("infected");
+
+        hairRenderer.color = new Color(0, 0, 0, 1);
+
+        pantsRenderer.sprite = Resources.Load<Sprite>("시민/leg3");
+        // 머리 검정
+        // 빨강 옷
+        // 파랑 바지
+    }
+
     // 키를 랜덤하게 해서 키 큰 사람, 뚱뚱한 사람( scale.y )
     // 머리카락 색깔은 정해주는 칼라값 중 적용
     // 피부색은 갈색
