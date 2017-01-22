@@ -3,7 +3,7 @@
     {
       "StageNum": 1,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,0,0,0]
@@ -43,7 +43,7 @@
 	{
       "StageNum": 2,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,0,0,0]
@@ -83,7 +83,7 @@
 	{
       "StageNum": 3,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,0,0,0]
@@ -123,7 +123,7 @@
 	{
       "StageNum": 4,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,0,0,0]
@@ -163,7 +163,7 @@
 	{
       "StageNum": 5,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,0,0,0]
@@ -203,7 +203,7 @@
 	{
       "StageNum": 6,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,0,0,0]
@@ -243,7 +243,7 @@
 	{
       "StageNum": 7,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,0,0,0]
@@ -283,7 +283,7 @@
 	{
       "StageNum": 8,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,1,0,0,0,0,0,0]
@@ -323,7 +323,7 @@
 	{
       "StageNum": 9,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,1,0,0]
@@ -363,7 +363,7 @@
 	{
       "StageNum": 10,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,0,0,0]
@@ -403,7 +403,7 @@
 		{
       "StageNum": 11,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,0,0,0,0,0,0,0,0,0]
@@ -443,7 +443,7 @@
 		{
       "StageNum": 12,
       "MaxDeliverCount": 4,
-      "UsableCash": 1000,
+      "UsableCash": 1200,
       "MapData": [
         {
           "Row": [0,1,0,1,0,0,0,0,0,0]
