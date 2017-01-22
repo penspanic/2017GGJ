@@ -8,16 +8,13 @@ public class CLogoManager : MonoBehaviour {
 
 	bool _isStart=false;
 	public GameObject _creditPanel;
+	public GameObject _logoPanel;
 	public float GotoSceneDelay = 1.0f;
 	// Use this for initialization
 	void Start () {
-		
+		StartCoroutine(StartLogo_Co());
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 	public void PushStart()
 	{
 		if(_isStart)return;
@@ -26,7 +23,7 @@ public class CLogoManager : MonoBehaviour {
 	}
 	public void GotoBriefing()
 	{
-		Debug.Log("브리핑룸으로");
+		SceneManager.LoadScene("SelectStage");
 	}
 	public void TurnOnCredit()
 	{
@@ -42,5 +39,14 @@ public class CLogoManager : MonoBehaviour {
 		FadeFilter.instance.FadeOut(Color.black,0.8f);
 		yield return new WaitForSeconds(0.8f);
 		GotoBriefing();
+	}
+	IEnumerator StartLogo_Co()
+	{
+		FadeFilter.instance.FadeIn(Color.black,0.5f);
+		yield return new WaitForSeconds(3f);
+		FadeFilter.instance.FadeOut(Color.black,0.5f);
+		yield return new WaitForSeconds(0.5f);
+		FadeFilter.instance.FadeIn(Color.black,0.5f);
+		_logoPanel.SetActive(false);
 	}
 }
