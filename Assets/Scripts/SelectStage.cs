@@ -9,7 +9,7 @@ public class SelectStage : MonoBehaviour
 
     void Awake()
     {
-        FadeFilter.instance.FadeIn(new Color(1f, 1f, 1f, 0f), 1f);
+        FadeFilter.instance.FadeIn(new Color(0f, 0f, 0f, 0f), 1f);
     }
 
     public void OnStageButtonDown(int stageNum)
@@ -26,7 +26,13 @@ public class SelectStage : MonoBehaviour
 
     void ChangeScene()
     {
-        //SceneManager.LoadScene("Briefing");
+        if(PlayerPrefsManager.instance.IsExist("isTutorialShowed") == false)
+        {
+            PlayerPrefsManager.instance.Set("isTutorialShowed", true);
+            SceneManager.LoadScene("Briefing");
+            return;
+        }
+
         SceneManager.LoadScene("InGame");
     }
 }

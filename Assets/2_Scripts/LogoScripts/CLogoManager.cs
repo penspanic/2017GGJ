@@ -21,10 +21,28 @@ public class CLogoManager : MonoBehaviour {
 		_isStart = true;
 		StartCoroutine(PushStart_Co());
 	}
-	public void GotoBriefing()
+	public void GotoSelectStage()
 	{
 		SceneManager.LoadScene("SelectStage");
 	}
+    public void TutorialButtonDown()
+    {
+        if(_isStart == true)
+        {
+            return;
+        }
+        _isStart = true;
+
+        GameManager.instance.selectedStageNum = -1;
+
+        FadeFilter.instance.FadeOut(Color.black, 1f);
+        Invoke("GotoBriefing", 1f);
+    }
+    private void GotoBriefing()
+    {
+        SceneManager.LoadScene("Briefing");
+    }
+
 	public void TurnOnCredit()
 	{
 		_creditPanel.SetActive(true);
@@ -33,12 +51,13 @@ public class CLogoManager : MonoBehaviour {
 	{
 		_creditPanel.SetActive(false);
 	}
+
 	IEnumerator PushStart_Co()
 	{
 		yield return new WaitForSeconds(GotoSceneDelay);
 		FadeFilter.instance.FadeOut(Color.black,0.8f);
 		yield return new WaitForSeconds(0.8f);
-		GotoBriefing();
+		GotoSelectStage();
 	}
 	IEnumerator StartLogo_Co()
 	{

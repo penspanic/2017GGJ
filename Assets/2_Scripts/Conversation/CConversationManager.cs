@@ -53,7 +53,7 @@ public class CConversationManager : MonoBehaviour {
 	}
 	IEnumerator StartBreifing_Co()
 	{
-		FadeFilter.instance.FadeIn(Color.black,0.8f);
+        FadeFilter.instance.FadeIn(Color.black, 1f);
 		yield return new WaitForSeconds(2.0f);
 		StartCoroutine(Centence_Co());
 	}
@@ -104,12 +104,21 @@ public class CConversationManager : MonoBehaviour {
 		Debug.Log(CentenceCount);
 
 	}
+
 	IEnumerator GotoInGame()
 	{
-		FadeFilter.instance.FadeOut(Color.black,0.8f);
+        FadeFilter.instance.FadeOut(Color.black, 1f);
 		yield return new WaitForSeconds(1.2f);
+
+        if(GameManager.instance.selectedStageNum == -1) // 다시 로고씬으로 돌아가야 할 때
+        {
+            SceneManager.LoadScene("Logo");
+            yield break;
+        }
+
 		SceneManager.LoadScene("InGame");
 	}
+
 	bool IsEquelsCentencesCount()
 	{
 		return ((CentenceCount+1)==Datas.Count)?true:false;
