@@ -37,7 +37,7 @@ public class ItemManager : MonoBehaviour
         _currentSelect = ItemType.None;
 
         remainMoneyText = GameObject.Find("Money Text").GetComponent<Text>();
-        remainMoneyText.text = currentRemainCash.ToString();
+        remainMoneyText.text = "Fund:" + currentRemainCash.ToString();
 
         effectMgr = GameObject.FindObjectOfType<EffectManager>();
     }
@@ -77,7 +77,7 @@ public class ItemManager : MonoBehaviour
         if (currentRemainCash < 0)
             currentRemainCash = 0;
 
-        remainMoneyText.text = currentRemainCash.ToString();
+        remainMoneyText.text = "Fund:" + currentRemainCash.ToString();
 
         effectMgr.ShowEffect(effectPos);
     }
