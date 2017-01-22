@@ -13,7 +13,7 @@ public class CharacterVarietyController : MonoBehaviour
     SpriteRenderer headRenderer;
     SpriteRenderer eyeRenderer;
     SpriteRenderer armRenderer;
-
+    SpriteRenderer blackRenderer;
     void Awake()
     {
         skinColors = new Color[3] { new Color(229f / 255f, 163f / 225f, 115f / 225f), new Color(204f / 255f, 162f / 255f, 132f / 255f), new Color(164f / 255f, 116f / 255f, 81f / 255f) };
@@ -25,6 +25,7 @@ public class CharacterVarietyController : MonoBehaviour
         headRenderer = transform.FindChild("Head").GetComponent<SpriteRenderer>();
         eyeRenderer = transform.FindChild("Eye").GetComponent<SpriteRenderer>();
         armRenderer = transform.FindChild("Arm").GetComponent<SpriteRenderer>();
+        blackRenderer = transform.FindChild("Black").GetComponent<SpriteRenderer>();
     }
 
     public void Set(CellType type)
@@ -97,6 +98,8 @@ public class CharacterVarietyController : MonoBehaviour
         hairRenderer.color = new Color(0, 0, 0, 1);
 
         pantsRenderer.sprite = Resources.Load<Sprite>("시민/leg3");
+
+        blackRenderer.enabled = true;
         // 머리 검정
         // 빨강 옷
         // 파랑 바지

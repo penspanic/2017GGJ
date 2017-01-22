@@ -86,6 +86,12 @@ public class Character : MonoBehaviour
     }
 
     Vector3 originalPos;
+
+    void LateUpdate()
+    {
+        transform.FindChild("Black").position = originalPos;
+    }
+
     public void SetCharacterType(CellType cell)
     {
         isProtester = cell == CellType.Protester;
