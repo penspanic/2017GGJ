@@ -19,13 +19,13 @@ public class Character : MonoBehaviour
         private set;
     }
 
-    public int maxDeliverCount;
     public bool isInstigator;
 
     private const float deliverDistance = 1f;
     private const float minBallonDisappearTime = 0.6f;
     private const float maxBallonDisappearTime = 0.9f;
     static StageManager stageMgr;
+    static MapManager mapMgr;
 
     private SpriteRenderer ballonSprRenderer;
     private Ballon ballon;
@@ -34,6 +34,7 @@ public class Character : MonoBehaviour
         if(stageMgr == null)
         {
             stageMgr = GameObject.FindObjectOfType<StageManager>();
+            mapMgr = GameObject.FindObjectOfType<MapManager>();
         }
 
         ballon = transform.FindChild("Ballon").GetComponent<Ballon>();
@@ -64,6 +65,7 @@ public class Character : MonoBehaviour
 
         yield return new WaitForSeconds(time);
 
+        int maxDeliverCount = mapMgr.currentMapData.MaxDeliverCount;
         stageMgr.OnCharacterTouch(this, isInstigator ? maxDeliverCount : deliverCount);
 
         yield return new WaitForSeconds(0.5f);

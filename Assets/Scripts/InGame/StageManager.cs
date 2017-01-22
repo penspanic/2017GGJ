@@ -116,7 +116,7 @@ public class StageManager : MonoBehaviour
 
     public void OnCharacterTouch(Character target, int deliverRemainCount)
     {
-        if(deliverRemainCount == -1)
+        if(deliverRemainCount == 0)
             return;
         if (target.isProtester == true)
             return;

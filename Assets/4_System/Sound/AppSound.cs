@@ -67,7 +67,6 @@ public class AppSound : MonoBehaviour
         // 씬이 바뀌었는지 검사
 		if (sceneName != SceneManager.GetActiveScene().name)
         {
-			Debug.Log(sceneName);
 			if(IsSameMenuScene())return;
 			if (sceneName == "non" ||sceneName == "Logo" || sceneName =="SelectStage" || sceneName=="Briefing")
 				sceneName = "Menu";

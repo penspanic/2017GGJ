@@ -47,7 +47,7 @@ public class ItemManager : MonoBehaviour
         _currentSelect = ItemType.None;
 
         remainMoneyText = GameObject.Find("Money Text").GetComponent<Text>();
-        remainMoneyText.text = remainMoneyText.ToString();
+        remainMoneyText.text = currentRemainCash.ToString();
     }
 
     public void SetCash(int cash)
