@@ -12,11 +12,18 @@ public class DragItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private Dictionary<int, GameObject> m_DraggingIcons = new Dictionary<int, GameObject>();
     private Dictionary<int, RectTransform> m_DraggingPlanes = new Dictionary<int, RectTransform>();
 
+    private ItemManager itemMgr;
+
+    void Awake()
+    {
+        itemMgr = GameObject.FindObjectOfType<ItemManager>();
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (ItemManager.Instance.IsSelected())
+        if (itemMgr.IsSelected())
             return;
-        ItemManager.Instance.TurnItem(itemType);
+        itemMgr.TurnItem(itemType);
         var canvas = FindInParents<Canvas>(gameObject);
         if (canvas == null)
             return;
@@ -67,7 +74,7 @@ public class DragItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        ItemManager.Instance.TurnItem(ItemType.None);
+        itemMgr.TurnItem(ItemType.None);
 
         if (m_DraggingIcons[eventData.pointerId] != null)
             Destroy(m_DraggingIcons[eventData.pointerId]);

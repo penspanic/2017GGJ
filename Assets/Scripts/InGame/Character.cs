@@ -56,7 +56,7 @@ public class Character : MonoBehaviour
 
     private IEnumerator TalkProcess(int deliverCount)
     {
-        stageMgr.deliverUpdated = true;
+        stageMgr.isDeliverUpdated = true;
 
         float time = Random.Range(minBallonDisappearTime, maxBallonDisappearTime);
 
@@ -104,7 +104,7 @@ public class Character : MonoBehaviour
         {
             return false;
         }
-
+        stageMgr.isDeliverUpdated = true;
         isInstigator = true;
 
         GetComponent<CharacterVarietyController>().ChangeToAgent();
@@ -119,6 +119,7 @@ public class Character : MonoBehaviour
             return false;
         }
 
+        stageMgr.isDeliverUpdated = true;
         isInstigator = false;
         isProtester = false;
 

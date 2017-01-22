@@ -11,7 +11,7 @@ public enum ItemType
     Kill
 }
 
-public class ItemManager : Singleton<ItemManager>
+public class ItemManager : MonoBehaviour
 {
     public ItemType currentSelect
     {
@@ -47,13 +47,15 @@ public class ItemManager : Singleton<ItemManager>
         _currentSelect = ItemType.None;
 
         remainMoneyText = GameObject.Find("Money Text").GetComponent<Text>();
+        remainMoneyText.text = remainMoneyText.ToString();
     }
 
     public void SetCash(int cash)
     {
         currentRemainCash = cash;
 
-        remainMoneyText.text = cash.ToString();
+        if (remainMoneyText != null)
+            remainMoneyText.text = cash.ToString();
     }
 
     public void UseItemCost(ItemType type)
@@ -67,5 +69,13 @@ public class ItemManager : Singleton<ItemManager>
             currentRemainCash = 0;
 
         remainMoneyText.text = currentRemainCash.ToString();
+    }
+
+    public bool CanBuyItem()
+    {
+        if (currentRemainCash < InstigatorItemCost)
+            return false;
+
+        return true;
     }
 }

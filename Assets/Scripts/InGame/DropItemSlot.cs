@@ -5,39 +5,29 @@ using UnityEngine;
 
 public class DropItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    ItemManager itemMgr;
 
-    // Use this for initialization
-    void Start()
+    void Awake()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    public void OnEnable()
-    {
-
+        itemMgr = GameObject.FindObjectOfType<ItemManager>();
     }
 
     public void OnDrop(PointerEventData data)
     {
-        if(ItemManager.Instance.currentSelect == ItemType.Instigator)
+        if (itemMgr.currentSelect == ItemType.Instigator)
         {
-            if (ItemManager.Instance.currentRemainCash >= ItemManager.InstigatorItemCost)
+            if (itemMgr.currentRemainCash >= ItemManager.InstigatorItemCost)
             {
                 if(GetComponent<Character>().MakeInstigater() == true)
-                    ItemManager.Instance.UseItemCost(ItemType.Instigator);
+                    itemMgr.UseItemCost(ItemType.Instigator);
             }
         }
-        else if(ItemManager.Instance.currentSelect == ItemType.Kill)
+        else if(itemMgr.currentSelect == ItemType.Kill)
         {
-            if(ItemManager.Instance.currentRemainCash >= ItemManager.KillItemCost)
+            if(itemMgr.currentRemainCash >= ItemManager.KillItemCost)
             {
                 if (GetComponent<Character>().KillAndChange() == true)
-                    ItemManager.Instance.UseItemCost(ItemType.Kill);
+                    itemMgr.UseItemCost(ItemType.Kill);
             }
         }
     }

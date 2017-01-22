@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
 public class StageManager : MonoBehaviour
 {
+    public GameObject gameClear;
+    public GameObject gameFail;
+
     Character[] characters;
     MapManager mapMgr;
+    ItemManager itemMgr;
 
     public bool IsGameEnd
     {
@@ -13,13 +18,15 @@ public class StageManager : MonoBehaviour
         private set;
     }
 
-    public bool deliverUpdated;
+    public bool isDeliverUpdated;
     void Awake()
     {
         FadeFilter.instance.FadeIn(new Color(0, 0, 0, 0), 1f);
         mapMgr = GameObject.FindObjectOfType<MapManager>();
+        itemMgr = GameObject.FindObjectOfType<ItemManager>();
+
         characters = mapMgr.CreateCharacters();
-        ItemManager.Instance.SetCash(mapMgr.currentMapData.UsableCash);
+        itemMgr.SetCash(mapMgr.currentMapData.UsableCash);
 
         StartCoroutine(StartProcess());
     }
@@ -42,19 +49,21 @@ public class StageManager : MonoBehaviour
     {
         while (true)
         {
-            if(deliverUpdated == true)
+            if(isDeliverUpdated == true)
             {
-                deliverUpdated = false;
+                isDeliverUpdated = false;
 
                 yield return new WaitForSeconds(2f);
 
-                if(IsGameEnd == true)
+                if(isDeliverUpdated == false)
                 {
-                    yield break;
-                }
+                    CheckGameEnd();
 
-                if(deliverUpdated == false)
-                {
+                    if(IsGameEnd == true)
+                    {
+                        yield break;
+                    }
+
                     foreach (Character eachCharacter in characters)
                     {
                         eachCharacter.SetDeliveredState(false);
@@ -68,9 +77,41 @@ public class StageManager : MonoBehaviour
 
     }
 
+    void CheckGameEnd()
+    {
+        // 게임 패배 체크
+        if(itemMgr.CanBuyItem() == false && IsAllInfected() == false)
+        {
+            OnGameEnd(false);
+            return;
+        }
+        //
+
+        // 게임 승리 체크
+        if(IsAllInfected() == true)
+        {
+            OnGameEnd(true);
+        }
+        //
+    }
+
+    bool IsAllInfected()
+    {
+        foreach (Character eachCharacter in characters)
+        {
+            if (eachCharacter.isProtester == false && eachCharacter.isInfected == false)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     void OnGameEnd(bool isClear)
     {
-
+        Debug.Log("isClear : " + isClear.ToString());
+        IsGameEnd = true;
     }
 
     public void OnCharacterTouch(Character target, int deliverRemainCount)
@@ -113,4 +154,25 @@ public class StageManager : MonoBehaviour
 
         return (float)deliveredCharacterCount / (float)normalCharacterCount;
     }
+
+    #region UI Handler
+    bool isSceneChanging = false;
+    public void OnPowerButtonDown()
+    {
+        if(isSceneChanging == true)
+        {
+            return;
+        }
+        isSceneChanging = true;
+
+        FadeFilter.instance.FadeOut(Color.black, 1f);
+        Invoke("GotoStageSelect", 1f);
+    }
+
+    void GotoStageSelect()
+    {
+        SceneManager.LoadScene("SelectStage");
+    }
+
+    #endregion
 }

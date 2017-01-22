@@ -6,6 +6,12 @@ public class SelectStage : MonoBehaviour
 {
 
     bool isSelected = false;
+
+    void Awake()
+    {
+        FadeFilter.instance.FadeIn(new Color(1f, 1f, 1f, 0f), 1f);
+    }
+
     public void OnStageButtonDown(int stageNum)
     {
         if (isSelected == true)
