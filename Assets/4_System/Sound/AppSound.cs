@@ -27,6 +27,8 @@ public class AppSound : MonoBehaviour
     [System.NonSerialized]
     public AudioSource SE_MENU_BUTTON;
     [System.NonSerialized]
+    public AudioSource SE_MENU_KEYBOARD;
+    [System.NonSerialized]
     public AudioSource SE_MISSION_FAILURE;
     [System.NonSerialized]
     public AudioSource SE_MISSION_SUCCESS;
@@ -56,6 +58,7 @@ public class AppSound : MonoBehaviour
         SE_ITEM_KNIFE = fm.LoadResourcesSound("SE", "Item_knife");
         SE_ITEM_MONEY = fm.LoadResourcesSound("SE", "Item_Money");
         SE_MENU_BUTTON = fm.LoadResourcesSound("SE", "Menu+button");
+        SE_MENU_KEYBOARD = fm.LoadResourcesSound("SE", "Breifing_keyboard_typing");
         SE_MISSION_FAILURE = fm.LoadResourcesSound("SE", "Mission_Failure");
         SE_MISSION_SUCCESS = fm.LoadResourcesSound("SE", "Mission_Success");
 
@@ -65,10 +68,10 @@ public class AppSound : MonoBehaviour
     void Update()
     {
         // 씬이 바뀌었는지 검사
-		if (sceneName != SceneManager.GetActiveScene().name)
+		if (!IsSameMenuScene())
         {
-			if(IsSameMenuScene())return;
-			if (sceneName == "non" ||sceneName == "Logo" || sceneName =="SelectStage" || sceneName=="Briefing")
+            string thissceneName = SceneManager.GetActiveScene().name;
+			if (thissceneName == "Logo" || thissceneName =="SelectStage" || thissceneName=="Briefing")
 				sceneName = "Menu";
 			else
             	sceneName = SceneManager.GetActiveScene().name;
@@ -82,7 +85,8 @@ public class AppSound : MonoBehaviour
 
             if (sceneName == "Menu")
             {
-                //fm.Stop ("BGM");
+                Debug.Log("메뉴 ");
+                fm.Stop ("BGM");
                 fm.FadeOutVolumeGroup("BGM", BGM_MENU, 0.0f, 1.0f, false);
                 fm.FadeInVolume(BGM_MENU, SoundBGMVolume, 1.0f, true);
                 BGM_MENU.loop = true;
@@ -92,7 +96,7 @@ public class AppSound : MonoBehaviour
             if (sceneName == "InGame")
             {
 				Debug.Log("인게임 ");
-                //fm.Stop("BGM");
+                fm.Stop("BGM");
                 fm.FadeOutVolumeGroup("BGM", BGM_STAGE, 0.0f, 1.0f, false);
                 fm.FadeInVolume(BGM_STAGE, SoundBGMVolume, 1.0f, true);
                 BGM_STAGE.loop = true;
@@ -104,9 +108,12 @@ public class AppSound : MonoBehaviour
     bool IsSameMenuScene()
     {
 		string thisSceneName = SceneManager.GetActiveScene().name;
-		if (sceneName == "Menu"&&(thisSceneName == "Logo" || thisSceneName =="SelectStage" || thisSceneName=="Briefing"))
+		if (sceneName == "Menu"&&(thisSceneName == "non" ||thisSceneName == "Logo" || thisSceneName =="SelectStage" || thisSceneName=="Briefing"))
 		{
 			return true;
+        }else if(sceneName == "InGame"&&thisSceneName == "InGame")
+        {
+            return true;
         }else
 			return false;
     }

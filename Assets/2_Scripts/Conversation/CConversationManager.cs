@@ -21,7 +21,7 @@ public class CConversationManager : MonoBehaviour {
 	[SerializeField] List<CentenceData> Datas = new List<CentenceData>();
 	[SerializeField] float _centenceDelay = 0.2f;
 	bool _isNowCoutine = false;
-
+	bool _isFastBrif = false;
 	int CentenceCount = 0;
 	// Use this for initialization
 	void Start () {
@@ -29,6 +29,7 @@ public class CConversationManager : MonoBehaviour {
 		_objs.Add(_knifeObj);
 		_objs.Add(_touchText);
 		StartCoroutine(StartBreifing_Co());
+		AppSound.instance.SE_MENU_KEYBOARD.Play();
 	}
 	
 	// Update is called once per frame
@@ -43,6 +44,7 @@ public class CConversationManager : MonoBehaviour {
 					 StartCoroutine(Centence_Co());
 				break;
 				case BrifPhase.Write :
+					_isFastBrif = true;
 					_centenceDelay = 0.0f;
 				break;
 				default:
@@ -59,8 +61,10 @@ public class CConversationManager : MonoBehaviour {
 	}
 	IEnumerator Centence_Co()
 	{
-		currentPhase = BrifPhase.Write;
 		_isNowCoutine = true;
+		yield return new WaitForSeconds(0.2f);
+		currentPhase = BrifPhase.Write;
+		_isFastBrif = false;
 		foreach (GameObject item in _objs)
 		{
 			if(item.activeInHierarchy)
@@ -69,7 +73,7 @@ public class CConversationManager : MonoBehaviour {
 		_centenceDelay = 0.2f;
 		string currentCentence = "";
 		textBox.text = "";
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(0.3f);
 		switch (CentenceCount)
 		{
 			case 0:
@@ -122,5 +126,12 @@ public class CConversationManager : MonoBehaviour {
 	bool IsEquelsCentencesCount()
 	{
 		return ((CentenceCount+1)==Datas.Count)?true:false;
+	}
+	/// <summary>
+	/// This function is called when the behaviour becomes disabled or inactive.
+	/// </summary>
+	void OnDisable()
+	{
+		AppSound.instance.fm.Stop("SE");
 	}
 }

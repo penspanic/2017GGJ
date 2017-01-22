@@ -62,7 +62,7 @@ public class CMoveController : MonoBehaviour {
             yield return new WaitForSeconds(delayTime);
 			StartMove();
 			_targetPosition = LockOnToTarget();
-			Debug.Log(_targetPosition);
+//			Debug.Log(_targetPosition);
 		}
 	}
 	
