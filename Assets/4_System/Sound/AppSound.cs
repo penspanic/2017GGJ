@@ -16,8 +16,10 @@ public class AppSound : MonoBehaviour {
 
 
 	// 효과음
-	[System.NonSerialized] public AudioSource SE_TOUCH_1;
-	[System.NonSerialized] public AudioSource SE_COMPLETE;
+	[System.NonSerialized] public AudioSource SE_ITEM_KNIFE;
+	[System.NonSerialized] public AudioSource SE_ITEM_MONEY;
+	[System.NonSerialized] public AudioSource SE_MENE_BUTTON;
+	[System.NonSerialized] public AudioSource SE_MISSION_FAILURE;
 	
 
 	// === 내부 파라미터 ======================================
@@ -41,10 +43,10 @@ public class AppSound : MonoBehaviour {
 		// 효과음
 		fm.CreateGroup("SE");
 		fm.SoundFolder = "Sounds/";
-
+/*
 		SE_TOUCH_1 				= fm.LoadResourcesSound("SE","UItouch");
 		SE_COMPLETE				= fm.LoadResourcesSound("SE","chartolocation");
-		
+*/		
 
 		instance = this;
 	}
