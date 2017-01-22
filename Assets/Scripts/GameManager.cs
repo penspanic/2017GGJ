@@ -26,4 +26,9 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
     }
+
+    public void OnStageButtonDown(int stageNum)
+    {
+        selectedStageNum = stageNum;
+    }
 }
