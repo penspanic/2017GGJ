@@ -10,6 +10,12 @@ public class SelectStage : MonoBehaviour
     void Awake()
     {
         FadeFilter.instance.FadeIn(new Color(0f, 0f, 0f, 0f), 1f);
+        SetButtonLockState();
+    }
+
+    void SetButtonLockState()
+    {
+
     }
 
     public void OnStageButtonDown(int stageNum)

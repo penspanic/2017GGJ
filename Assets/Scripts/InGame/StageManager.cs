@@ -112,6 +112,16 @@ public class StageManager : MonoBehaviour
     {
         Debug.Log("isClear : " + isClear.ToString());
         IsGameEnd = true;
+
+        if(isClear == true)
+        {
+            gameClear.SetActive(true);
+            PlayerPrefsManager.instance.Set("lastClearedStageNum", GameManager.instance.selectedStageNum);
+        }
+        else
+        {
+            gameFail.SetActive(true);
+        }
     }
 
     public void OnCharacterTouch(Character target, int deliverRemainCount)
