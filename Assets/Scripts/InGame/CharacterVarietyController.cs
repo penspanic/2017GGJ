@@ -41,8 +41,13 @@ public class CharacterVarietyController : MonoBehaviour
         armRenderer.color = skinColor;
         //
 
+        armRenderer.gameObject.transform.localPosition = new Vector3(0f, -0.2f, 0f);
+
+        if (transform.FindChild("x") != null) // 시위대일 때 시민으로 전환될 수도 있기 때문에 Disable
+            transform.FindChild("x").gameObject.SetActive(false);
+
         // 티셔츠
-        if(type == CellType.Normal)
+        if (type == CellType.Normal)
         {
             string sprName = "시민/body" + Random.Range(0, 2).ToString();
             Sprite spr = Resources.Load<Sprite>(sprName);

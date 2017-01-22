@@ -113,10 +113,10 @@ public class Character : MonoBehaviour
             return false;
         }
 
-        isInstigator = true;
+        isInstigator = false;
         isProtester = false;
 
-        GetComponent<CharacterVarietyController>().ChangeToAgent();
+        GetComponent<CharacterVarietyController>().Set(CellType.Normal);
 
         return true;
     }
