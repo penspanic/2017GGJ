@@ -19,7 +19,7 @@ public class DropItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             if (itemMgr.currentRemainCash >= ItemManager.InstigatorItemCost)
             {
                 if(GetComponent<Character>().MakeInstigater() == true)
-                    itemMgr.UseItemCost(ItemType.Instigator);
+                    itemMgr.UseItemCost(ItemType.Instigator, transform.position);
             }
         }
         else if(itemMgr.currentSelect == ItemType.Kill)
@@ -27,7 +27,7 @@ public class DropItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
             if(itemMgr.currentRemainCash >= ItemManager.KillItemCost)
             {
                 if (GetComponent<Character>().KillAndChange() == true)
-                    itemMgr.UseItemCost(ItemType.Kill);
+                    itemMgr.UseItemCost(ItemType.Kill, transform.position);
             }
         }
     }

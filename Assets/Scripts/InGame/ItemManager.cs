@@ -29,7 +29,18 @@ public class ItemManager : MonoBehaviour
     }
 
     Text remainMoneyText;
+    EffectManager effectMgr;
 
+
+    void Awake()
+    {
+        _currentSelect = ItemType.None;
+
+        remainMoneyText = GameObject.Find("Money Text").GetComponent<Text>();
+        remainMoneyText.text = currentRemainCash.ToString();
+
+        effectMgr = GameObject.FindObjectOfType<EffectManager>();
+    }
     public void TurnItem(ItemType item)
     {
         _currentSelect = item;
@@ -42,14 +53,6 @@ public class ItemManager : MonoBehaviour
         return _currentSelect.Equals(ItemType.None) ? false : true;
     }
 
-    void Awake()
-    {
-        _currentSelect = ItemType.None;
-
-        remainMoneyText = GameObject.Find("Money Text").GetComponent<Text>();
-        remainMoneyText.text = currentRemainCash.ToString();
-    }
-
     public void SetCash(int cash)
     {
         currentRemainCash = cash;
@@ -58,7 +61,7 @@ public class ItemManager : MonoBehaviour
             remainMoneyText.text = cash.ToString();
     }
 
-    public void UseItemCost(ItemType type)
+    public void UseItemCost(ItemType type, Vector2 effectPos)
     {
         if (type == ItemType.Instigator)
         {
@@ -75,6 +78,8 @@ public class ItemManager : MonoBehaviour
             currentRemainCash = 0;
 
         remainMoneyText.text = currentRemainCash.ToString();
+
+        effectMgr.ShowEffect(effectPos);
     }
 
     public bool CanBuyItem()
