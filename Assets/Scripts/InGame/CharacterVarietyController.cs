@@ -29,6 +29,11 @@ public class CharacterVarietyController : MonoBehaviour
 
     public void Set(CellType type)
     {
+        if(type == CellType.Protester)
+        {
+            return;
+        }
+
         // 피부색 처리
         Color skinColor = skinColors[Random.Range(0, skinColors.Length)];
 
@@ -66,6 +71,11 @@ public class CharacterVarietyController : MonoBehaviour
     {
         armRenderer.color = new Color(1, 1, 1, 1);
         headRenderer.color = new Color(1, 1, 1, 1);
+        armRenderer.gameObject.transform.localPosition = new Vector3(0f, -0.2f, 0f);
+
+        if (transform.FindChild("x") != null)
+            transform.FindChild("x").gameObject.SetActive(false);
+
         headRenderer.sprite = Resources.Load<Sprite>("국장/head");
         bodyRenderer.sprite = Resources.Load<Sprite>("국장/body");
         eyeRenderer.sprite = Resources.Load<Sprite>("국장/eye");

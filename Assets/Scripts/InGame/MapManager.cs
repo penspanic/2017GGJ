@@ -66,18 +66,27 @@ public class MapManager : MonoBehaviour
 
         currentMapData = stageMapDataList[GameManager.instance.selectedStageNum - 1];
         GameObject characterPrefab = Resources.Load<GameObject>("Prefab/Character");
+        GameObject protesterPrefab = Resources.Load<GameObject>("prefab/Protester");
+
         List<Character> characterList = new List<Character>();
         Transform characterParent = GameObject.Find("Characters").transform;
         for (int x = 0; x < 10; ++x)
         {
             for (int y = 0; y < 11; ++y)
             {
-                Character character = Instantiate(characterPrefab).GetComponent<Character>();
+                CellType type = (CellType)currentMapData.CellData[x, y];
+
+                Character character = null;
+                if (type == CellType.Normal)
+                    character = Instantiate(characterPrefab).GetComponent<Character>();
+                else if (type == CellType.Protester)
+                    character = Instantiate(protesterPrefab).GetComponent<Character>();
+
                 character.transform.SetParent(characterParent);
+
                 Vector3 createPos = new Vector3(-3.16f + 0.7f * x, 5f - 0.9f * y, 0);
                 character.transform.position = createPos;
 
-                CellType type = (CellType)currentMapData.CellData[x, y];
                 character.SetCharacterType(type);
                 character.GetComponent<CharacterVarietyController>().Set(type);
                 characterList.Add(character);
