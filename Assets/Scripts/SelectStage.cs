@@ -20,6 +20,7 @@ public class SelectStage : MonoBehaviour
 
     void ChangeScene()
     {
-        SceneManager.LoadScene("Briefing");
+        //SceneManager.LoadScene("Briefing");
+        SceneManager.LoadScene("InGame");
     }
 }

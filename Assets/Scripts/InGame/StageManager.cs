@@ -16,6 +16,7 @@ public class StageManager : MonoBehaviour
     public bool deliverUpdated;
     void Awake()
     {
+        FadeFilter.instance.FadeIn(new Color(0, 0, 0, 0), 1f);
         mapMgr = GameObject.FindObjectOfType<MapManager>();
         characters = mapMgr.CreateCharacters();
         ItemManager.Instance.SetCash(mapMgr.currentMapData.UsableCash);
@@ -64,6 +65,11 @@ public class StageManager : MonoBehaviour
             }
             yield return null;
         }
+
+    }
+
+    void OnGameEnd(bool isClear)
+    {
 
     }
 
