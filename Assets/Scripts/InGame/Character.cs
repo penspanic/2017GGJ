@@ -3,7 +3,12 @@ using System.Collections;
 
 public class Character : MonoBehaviour
 {
-    public bool isDelivered
+    public bool isDelivered // 메세지 전달 시스템을 만들기 위해 존재
+    {
+        get;
+        private set;
+    }
+    public bool isInfected // 빨간 티셔츠를 입었는가
     {
         get;
         private set;
@@ -44,6 +49,7 @@ public class Character : MonoBehaviour
         }
 
         isDelivered = true;
+        isInfected = true;
 
         StartCoroutine(TalkProcess(deliverCount));
     }

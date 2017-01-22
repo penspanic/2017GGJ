@@ -105,7 +105,7 @@ public class StageManager : MonoBehaviour
                 continue;
             }
             ++normalCharacterCount;
-            if(eachCharacter.isDelivered)
+            if(eachCharacter.isInfected == true)
             {
                 deliveredCharacterCount++;
             }
