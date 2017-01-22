@@ -79,15 +79,18 @@ public class Character : MonoBehaviour
         if (this.gameObject.activeSelf == false)
             return false;
 
-        if ((target.transform.position - this.transform.position).magnitude < deliverDistance)
+        if ((target.transform.position - originalPos).magnitude < deliverDistance)
             return true;
 
         return false;
     }
 
+    Vector3 originalPos;
     public void SetCharacterType(CellType cell)
     {
         isProtester = cell == CellType.Protester;
+
+        originalPos = transform.position;
     }
 
     public void SetDeliveredState(bool state)

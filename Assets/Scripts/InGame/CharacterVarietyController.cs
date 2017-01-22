@@ -62,6 +62,7 @@ public class CharacterVarietyController : MonoBehaviour
 
         // 머리카락
         hairRenderer.color = hairColors[Random.Range(0, hairColors.Length)];
+        hairRenderer.sprite = Resources.Load<Sprite>("시민/hair" + Random.Range(0, 4).ToString());
         //
 
         // 바지
