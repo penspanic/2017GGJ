@@ -17,8 +17,10 @@ public class CLogoManager : MonoBehaviour {
 	
 	public void PushStart()
 	{
+		
 		if(_isStart)return;
 		_isStart = true;
+		AppSound.instance.SE_MENU_BUTTON.Play();
 		StartCoroutine(PushStart_Co());
 	}
 	public void GotoSelectStage()
@@ -45,10 +47,12 @@ public class CLogoManager : MonoBehaviour {
 
 	public void TurnOnCredit()
 	{
+		AppSound.instance.SE_MENU_BUTTON.Play();
 		_creditPanel.SetActive(true);
 	}
 	public void TurnOffCredit()
 	{
+		AppSound.instance.SE_MENU_BUTTON.Play();
 		_creditPanel.SetActive(false);
 	}
 
