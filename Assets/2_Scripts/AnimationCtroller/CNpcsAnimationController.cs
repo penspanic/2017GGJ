@@ -5,8 +5,8 @@ using UnityEngine;
 public class CNpcsAnimationController : MonoBehaviour
 {
 
-    Animator _ani;
-    List<string> _idles = new List<string>();
+    protected Animator _ani;
+    protected List<string> _idles = new List<string>();
     Task _idleMachine;
 
     /// <summary>
@@ -53,7 +53,7 @@ public class CNpcsAnimationController : MonoBehaviour
         }
     }
 
-    IEnumerator IdleMachine_Co()
+    protected virtual IEnumerator IdleMachine_Co()
     {
         float delayTime = Random.Range(0f, 10f);
         yield return new WaitForSeconds(delayTime);
