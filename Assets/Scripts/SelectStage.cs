@@ -10,18 +10,15 @@ public class SelectStage : MonoBehaviour
     void Awake()
     {
         FadeFilter.instance.FadeIn(new Color(0f, 0f, 0f, 0f), 1f);
-        SetButtonLockState();
-    }
-
-    void SetButtonLockState()
-    {
-
     }
 
     public void OnStageButtonDown(int stageNum)
     {
         if (isSelected == true)
             return;
+
+        AppSound.instance.SE_MENU_BUTTON.Play();
+
         isSelected = true;
         GameManager.instance.OnStageButtonDown(stageNum);
 

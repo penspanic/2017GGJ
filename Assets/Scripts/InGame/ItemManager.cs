@@ -61,9 +61,15 @@ public class ItemManager : MonoBehaviour
     public void UseItemCost(ItemType type)
     {
         if (type == ItemType.Instigator)
+        {
+            AppSound.instance.SE_ITEM_MONEY.Play();
             currentRemainCash -= InstigatorItemCost;
+        }
         else if (type == ItemType.Kill)
+        {
+            AppSound.instance.SE_ITEM_KNIFE.Play();
             currentRemainCash -= KillItemCost;
+        }
 
         if (currentRemainCash < 0)
             currentRemainCash = 0;

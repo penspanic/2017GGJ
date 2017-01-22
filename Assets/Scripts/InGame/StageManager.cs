@@ -116,11 +116,13 @@ public class StageManager : MonoBehaviour
         if(isClear == true)
         {
             gameClear.SetActive(true);
+            AppSound.instance.SE_MISSION_SUCCESS.Play();
             PlayerPrefsManager.instance.Set("lastClearedStageNum", GameManager.instance.selectedStageNum);
         }
         else
         {
             gameFail.SetActive(true);
+            AppSound.instance.SE_MISSION_FAILURE.Play();
         }
     }
 
@@ -174,6 +176,8 @@ public class StageManager : MonoBehaviour
             return;
         }
         isSceneChanging = true;
+
+        AppSound.instance.SE_MENU_BUTTON.Play();
 
         FadeFilter.instance.FadeOut(Color.black, 1f);
         Invoke("GotoStageSelect", 1f);
