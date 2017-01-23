@@ -29,6 +29,7 @@ public class Character : MonoBehaviour
 
     private SpriteRenderer ballonSprRenderer;
     private Ballon ballon;
+    private int lastDeliverRemainCount = 0; // 마지막으로 전달됬을 때 남은 전달 횟수
     void Awake()
     {
         if(stageMgr == null)
@@ -44,11 +45,17 @@ public class Character : MonoBehaviour
 
     public void Talk(int deliverCount)
     {
-        if(isDelivered == true || isProtester == true)
+        if(isProtester == true)
         {
             return;
         }
 
+        if(isDelivered == true && deliverCount < lastDeliverRemainCount)
+        {
+            return;
+        }
+
+        lastDeliverRemainCount = deliverCount;
         isDelivered = true;
         isInfected = true;
 
@@ -71,7 +78,7 @@ public class Character : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         if(isInstigator == false)
-            GetComponent<CharacterVarietyController>().ChangeToRedType();
+            GetComponent<CharacterVarietyController>().ChangeToRedType(isInstigator);
     }
 
     public bool IsInDeliverRange(Character target)
@@ -119,7 +126,11 @@ public class Character : MonoBehaviour
         isInstigator = true;
 
         GetComponent<CharacterVarietyController>().ChangeToAgent();
-
+        
+        if(lastDeliverRemainCount > 0)
+        {
+            GetComponent<CharacterVarietyController>().ChangeToRedType(true);
+        }
         return true;
     }
 

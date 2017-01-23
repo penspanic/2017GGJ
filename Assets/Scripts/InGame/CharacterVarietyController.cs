@@ -91,13 +91,14 @@ public class CharacterVarietyController : MonoBehaviour
         pantsRenderer.sprite = Resources.Load<Sprite>("국장/leg");
     }
 
-    public void ChangeToRedType()
+    public void ChangeToRedType(bool isInstigator)
     {
-        bodyRenderer.sprite = Resources.Load<Sprite>("infected");
-
-        hairRenderer.color = new Color(0, 0, 0, 1);
-
-        pantsRenderer.sprite = Resources.Load<Sprite>("시민/leg3");
+        if (isInstigator == false) // 시민만 외형이 바뀜
+        {
+            bodyRenderer.sprite = Resources.Load<Sprite>("infected");
+            pantsRenderer.sprite = Resources.Load<Sprite>("시민/leg3");
+            hairRenderer.color = new Color(0, 0, 0, 1);
+        }
 
         blackRenderer.enabled = true;
         // 머리 검정
