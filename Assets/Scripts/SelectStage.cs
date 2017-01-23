@@ -7,7 +7,7 @@ public class SelectStage : MonoBehaviour
 
     bool isSelected = false;
 
-    void Awake()
+    void Start()
     {
         FadeFilter.instance.FadeIn(new Color(0f, 0f, 0f, 0f), 1f);
     }
