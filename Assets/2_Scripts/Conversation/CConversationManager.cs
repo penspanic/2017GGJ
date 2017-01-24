@@ -13,21 +13,18 @@ public class CConversationManager : MonoBehaviour {
 		Write
 	}
 	BrifPhase currentPhase = BrifPhase.Ready;
-	[SerializeField]GameObject _moneyObj;
-	[SerializeField]GameObject _knifeObj;
 	[SerializeField]GameObject _touchText;
-	List<GameObject> _objs = new List<GameObject>();
+	[SerializeField]List<GameObject> _objs = new List<GameObject>();
 	[SerializeField]Text textBox;
-	[SerializeField] List<CentenceData> Datas = new List<CentenceData>();
+	[SerializeField] List<CentenceData> _datasList = new List<CentenceData>();
 	[SerializeField] float _centenceDelay = 0.2f;
 	bool _isNowCoutine = false;
 	bool _isFastBrif = false;
 	int CentenceCount = 0;
 	// Use this for initialization
 	void Start () {
-		_objs.Add(_moneyObj);
-		_objs.Add(_knifeObj);
 		_objs.Add(_touchText);
+		_datasList = _datasList.OrderBy(x => x._countNumber).ToList();
 		StartCoroutine(StartBreifing_Co());
 		AppSound.instance.SE_MENU_KEYBOARD.Play();
 	}
@@ -36,7 +33,7 @@ public class CConversationManager : MonoBehaviour {
 	void Update () {
 		if (Input.touchCount>0 || Input.GetMouseButtonDown(0))
 		{
-			Debug.Log("Input");
+			//Debug.Log("Input");
 			switch (currentPhase)
 			{
 				case BrifPhase.Wait :
@@ -73,39 +70,32 @@ public class CConversationManager : MonoBehaviour {
 		_centenceDelay = 0.2f;
 		string currentCentence = "";
 		textBox.text = "";
-		yield return new WaitForSeconds(0.3f);
-		switch (CentenceCount)
+		//문장수와 카운트수가 같다면 브리핑나가기
+		if(IsEquelsCentencesCount())
 		{
-			case 0:
-			break;
-			case 1:
-				_moneyObj.SetActive(true);
-			break;
-			case 2:
-				_knifeObj.SetActive(true);
-			break;
-			case 3:
-			break;
-			case 4:
-				StartCoroutine(GotoInGame());
-				yield break;
-			default:
-			break;
+		StartCoroutine(GotoInGame());
+		yield break;
 		}
+		yield return new WaitForSeconds(0.3f);
+		//카운트수와 같은 이름의 오브젝트 찾기 
+		GameObject obj = _objs.Where(x=>x.name.Equals(CentenceCount.ToString())).Select(x=>x).FirstOrDefault();
+		if(null != obj)
+		obj.SetActive(true);
+		//문장가져오기 
 		List<string> centences = new List<string>();
-		centences = Datas[CentenceCount].GetCentences();
+		centences = _datasList[CentenceCount].GetCentences();
 		for (int i = 0; i < centences.Count; i++)
 		{
-			currentCentence += centences[i]+" ";
+			currentCentence += centences[i]+" _";
 			yield return new WaitForSeconds(_centenceDelay);
 			textBox.text = currentCentence;
+			currentCentence = currentCentence.Remove(currentCentence.Length-1);
 		}
 		yield return null;
 		currentPhase = BrifPhase.Wait;
 		_touchText.SetActive(true);
 		CentenceCount +=1;
 		_isNowCoutine = false;
-		Debug.Log(CentenceCount);
 
 	}
 
@@ -125,7 +115,7 @@ public class CConversationManager : MonoBehaviour {
 
 	bool IsEquelsCentencesCount()
 	{
-		return ((CentenceCount+1)==Datas.Count)?true:false;
+		return ((CentenceCount+1)==_datasList.Count)?true:false;
 	}
 	/// <summary>
 	/// This function is called when the behaviour becomes disabled or inactive.
