@@ -2,83 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CNpcsAnimationController : MonoBehaviour
+public class CNpcsAnimationController : CCharacterAniController
 {
-
-    protected Animator _ani;
-    protected List<string> _idles = new List<string>();
-    Task _idleMachine;
-
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    void Awake()
+    [SerializeField]
+    float _jumpDelay = 1.0f;
+    Task _jumpMachine;
+    bool _isStartJump = false;
+  
+    public void ChangeMachine()
     {
-        _ani = GetComponent<Animator>();
-    }
-    // Use this for initialization
-    void Start()
-    {
-        _idles.Add("Idle1");
-        _idles.Add("Idle2");
-        _idles.Add("Idle3");
-        _idles.Add("Idle4");
-        StartMachine();
-    }
-
-    void StartMachine()
-    {
-        _idleMachine = new Task(IdleMachine_Co());
-    }
-    void StopMachine()
-    {
-        if (_idleMachine != null && _idleMachine.Running)
+        if (_idleMachine != null)
         {
             _idleMachine.Stop();
+            _idleMachine = null;
         }
+        if (_isStartJump) return;
+        _jumpMachine = new Task(JumpMachine_Co());
     }
-
-    void PauseMachine()
+    
+    //점프코루틴 
+    protected virtual IEnumerator JumpMachine_Co()
     {
-        if (_idleMachine != null && _idleMachine.Running)
+        WaitForSeconds jumpDelay = new WaitForSeconds(_jumpDelay/2);
+         float delayTime = Random.Range(0f, 1f);
+         yield return new WaitForSeconds(delayTime);
+         _ani.SetTrigger("Jump");
+         while (true)
         {
-            _idleMachine.Pause();
+            yield return jumpDelay;
+            ShowBallon("^-^",0.5f);
+            yield return jumpDelay;
+            ShowBallon("^-^", 0.5f);
+            _ani.SetTrigger("Jump");
         }
     }
-    void UnPauseMachine()
+    public void ShowBallon(string talk, float time)
     {
-        if (_idleMachine != null && _idleMachine.Paused)
-        {
-            _idleMachine.Unpause();
-        }
-    }
-
-    protected virtual IEnumerator IdleMachine_Co()
-    {
-        float delayTime = Random.Range(0f, 10f);
-        yield return new WaitForSeconds(delayTime);
-        int randomIdleString = Random.Range(0, _idles.Count);
-        _ani.SetTrigger(_idles[randomIdleString]);
-        while (true)
-        {
-            delayTime = Random.Range(10f, 15f);
-            yield return new WaitForSeconds(delayTime);
-            randomIdleString = Random.Range(0, _idles.Count);
-            _ani.SetTrigger(_idles[randomIdleString]);
-        }
-    }
-    public void TurnIdle()
-    {
-        _ani.SetBool("noAct", true);
-        _ani.SetBool("Move", false);
-        UnPauseMachine();
-    }
-
-    public void TurnMove()
-    {
-        PauseMachine();
-        _ani.SetBool("noAct", false);
-        _ani.SetBool("Move", true);
+        ballon.Show(talk, time);
     }
 
 }
