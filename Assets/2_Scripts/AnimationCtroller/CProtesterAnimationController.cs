@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CProtesterAnimationController : CNpcsAnimationController {
+public class CProtesterAnimationController : CCharacterAniController {
 
 	protected override IEnumerator IdleMachine_Co()
 	{

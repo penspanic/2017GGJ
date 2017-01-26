@@ -66,7 +66,14 @@ public class CLogoManager : MonoBehaviour {
 	IEnumerator StartLogo_Co()
 	{
 		FadeFilter.instance.FadeIn(Color.black,0.5f);
-		yield return new WaitForSeconds(3f);
+        if (SystemData.Instance._isViewLogo)
+        {
+            _logoPanel.SetActive(false);
+            yield break;
+        }
+        else
+            SystemData.Instance._isViewLogo = true;
+        yield return new WaitForSeconds(1.5f);
 		FadeFilter.instance.FadeOut(Color.black,0.5f);
 		yield return new WaitForSeconds(0.5f);
 		FadeFilter.instance.FadeIn(Color.black,0.5f);
