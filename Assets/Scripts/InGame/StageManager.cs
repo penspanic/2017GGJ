@@ -76,7 +76,7 @@ public class StageManager : MonoBehaviour
         }
 
     }
-    bool _isStartShow = false;
+
     void CheckGameEnd()
     {
         // 게임 패배 체크
@@ -90,12 +90,7 @@ public class StageManager : MonoBehaviour
         // 게임 승리 체크
         if(IsAllInfected() == true)
         {
-            if (!_isStartShow)
-            {
-                StartCoroutine(ClearShowTime_Co());
-                _isStartShow = true;
-            }
-            //OnGameEnd(true);
+            OnGameEnd(true);
         }
         //
     }
@@ -115,7 +110,7 @@ public class StageManager : MonoBehaviour
 
     void OnGameEnd(bool isClear)
     {
-        //Debug.Log("isClear : " + isClear.ToString());
+        Debug.Log("isClear : " + isClear.ToString());
         IsGameEnd = true;
 
         if(isClear == true)
@@ -129,7 +124,6 @@ public class StageManager : MonoBehaviour
             gameFail.SetActive(true);
             AppSound.instance.SE_MISSION_FAILURE.Play();
         }
-        Debug.Log("화면 아무곳이나 눌러도 스테이지 셀렉트");
     }
 
     public void OnCharacterTouch(Character target, int deliverRemainCount)
@@ -195,36 +189,4 @@ public class StageManager : MonoBehaviour
     }
 
     #endregion
-    //스테이지 클리어시 아무곳이나 눌러도 스테이지 셀렉트로 
-    private void Update()
-    {
-        if (IsGameEnd&&(Input.touchCount>0||Input.GetMouseButtonDown(0)))
-        {
-            OnPowerButtonDown();
-        }
-    }
-    //스테이지 클리어 했을때
-    IEnumerator ClearShowTime_Co()
-    {
-        GameObject[] chars = GameObject.FindGameObjectsWithTag("Character");
-        foreach (GameObject obj in chars)
-        {
-            obj.SendMessage("ChangeMachine", SendMessageOptions.DontRequireReceiver);
-        }
-        Debug.Log("Show");
-        yield return null;
-        StartCoroutine(SuccessEnd());
-        yield return new WaitForSeconds(3f);
-        foreach (GameObject obj in chars)
-        {
-            obj.GetComponent<BoxCollider2D>().isTrigger = false;
-            obj.SendMessage("StopMoveMachine", SendMessageOptions.DontRequireReceiver);
-        }
-    }
-    IEnumerator SuccessEnd()
-    {
-        yield return new WaitForSeconds(2.0f);
-        OnGameEnd(true);
-    }
-
 }

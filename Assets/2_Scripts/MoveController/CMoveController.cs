@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +15,6 @@ public class CMoveController : MonoBehaviour {
 	Vector3 _myOriginPosition;
 	Vector3 _targetPosition;
 	Task _moveMachine;
-    bool _isGameEnd=false;
 
 	/// <summary>
 	/// Awake is called when the script instance is being loaded.
@@ -52,7 +50,7 @@ public class CMoveController : MonoBehaviour {
 		{
 			_moveMachine.Stop();
 		}
-        EndSetPosition();
+		transform.position = _myOriginPosition;
 	}
 	IEnumerator MoveControll_Co()
 	{
@@ -67,17 +65,7 @@ public class CMoveController : MonoBehaviour {
 //			Debug.Log(_targetPosition);
 		}
 	}
-	public void EndSetPosition()
-    {
-        //자기칸 맨밑 오브젝트 찾기 
-        _targetPosition = GameObject.FindGameObjectsWithTag("Character").
-                            Where(x =>Mathf.Abs(x.transform.position.x-transform.position.x)<0.5f).
-                            OrderBy(x => x.transform.position.y).
-                            FirstOrDefault().transform.position;
-        //        Debug.Log("target:"+_targetPosition+"my"+transform.position);
-        _isGameEnd = true;
-        StartMove();
-    }
+	
 	// Update is called once per frame
 	void Update () {
 		float px = transform.position.x;
@@ -85,11 +73,9 @@ public class CMoveController : MonoBehaviour {
 		
 		float targetX = Mathf.Lerp(px,_targetPosition.x,_moveSpeed*Time.deltaTime);
 		float targetY = Mathf.Lerp(py,_targetPosition.y,_moveSpeed*Time.deltaTime);
-        if (!_isGameEnd)
-        {
-            targetX = Mathf.Clamp(targetX, _minLimitPosition.x, _maxLimitPosition.x);
-            targetY = Mathf.Clamp(targetY, _minLimitPosition.y, _maxLimitPosition.y);
-        }
+
+		targetX = Mathf.Clamp(targetX,_minLimitPosition.x,_maxLimitPosition.x);
+		targetY = Mathf.Clamp(targetY,_minLimitPosition.y,_maxLimitPosition.y);
 		transform.position = new Vector3(targetX,targetY,0);
 		if (Vector3.Distance(transform.position,_targetPosition)<0.005f)
 		{

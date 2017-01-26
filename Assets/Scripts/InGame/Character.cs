@@ -80,7 +80,7 @@ public class Character : MonoBehaviour
         if(isInstigator == false)
             GetComponent<CharacterVarietyController>().ChangeToRedType(isInstigator);
     }
-    
+
     public bool IsInDeliverRange(Character target)
     {
         if (this.gameObject.activeSelf == false)
