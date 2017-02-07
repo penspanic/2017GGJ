@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
 public class StageManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class StageManager : MonoBehaviour
     public GameObject gameFail;
 
     Character[] characters;
+    GameObject[] charactersGo;
     MapManager mapMgr;
     ItemManager itemMgr;
 
@@ -17,7 +19,10 @@ public class StageManager : MonoBehaviour
         get;
         private set;
     }
-
+    public GameObject[] AllChar()
+    {
+        return charactersGo;
+    }
     public bool isDeliverUpdated;
     void Awake()
     {
@@ -26,6 +31,7 @@ public class StageManager : MonoBehaviour
         itemMgr = GameObject.FindObjectOfType<ItemManager>();
 
         characters = mapMgr.CreateCharacters();
+        charactersGo = characters.Select(go => go.transform.gameObject).ToArray();
         itemMgr.SetCash(mapMgr.currentMapData.UsableCash);
 
         StartCoroutine(StartProcess());
@@ -226,5 +232,4 @@ public class StageManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         OnGameEnd(true);
     }
-
 }

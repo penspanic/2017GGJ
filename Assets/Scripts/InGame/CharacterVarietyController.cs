@@ -44,30 +44,30 @@ public class CharacterVarietyController : MonoBehaviour
 
         armRenderer.gameObject.transform.localPosition = new Vector3(0f, -0.2f, 0f);
 
-        if (transform.FindChild("x") != null) // 시위대일 때 시민으로 전환될 수도 있기 때문에 Disable
+        if (transform.FindChild("x") != null) // Hooligan일 때 Persons으로 전환될 수도 있기 때문에 Disable
             transform.FindChild("x").gameObject.SetActive(false);
 
         // 티셔츠
         if (type == CellType.Normal)
         {
-            string sprName = "시민/body" + Random.Range(0, 2).ToString();
+            string sprName = "Persons/body" + Random.Range(0, 2).ToString();
             Sprite spr = Resources.Load<Sprite>(sprName);
             bodyRenderer.sprite = spr;
         }
         else if(type == CellType.Protester)
         {
-            Sprite spr = Resources.Load<Sprite>("시위대/body");
+            Sprite spr = Resources.Load<Sprite>("Hooligan/body");
             bodyRenderer.sprite = spr;
         }
         //
 
         // 머리카락
         hairRenderer.color = hairColors[Random.Range(0, hairColors.Length)];
-        hairRenderer.sprite = Resources.Load<Sprite>("시민/hair" + Random.Range(0, 4).ToString());
+        hairRenderer.sprite = Resources.Load<Sprite>("Persons/hair" + Random.Range(0, 4).ToString());
         //
 
         // 바지
-        string pantsSprName = "시민/leg" + Random.Range(0, 4).ToString();
+        string pantsSprName = "Persons/leg" + Random.Range(0, 4).ToString();
         Sprite pantsSpr = Resources.Load<Sprite>(pantsSprName);
         pantsRenderer.sprite = pantsSpr;
         //
@@ -83,20 +83,20 @@ public class CharacterVarietyController : MonoBehaviour
         if (transform.FindChild("x") != null)
             transform.FindChild("x").gameObject.SetActive(false);
 
-        headRenderer.sprite = Resources.Load<Sprite>("국장/head");
-        bodyRenderer.sprite = Resources.Load<Sprite>("국장/body");
-        eyeRenderer.sprite = Resources.Load<Sprite>("국장/eye");
-        hairRenderer.sprite = Resources.Load<Sprite>("국장/hair");
-        armRenderer.sprite = Resources.Load<Sprite>("국장/arm");
-        pantsRenderer.sprite = Resources.Load<Sprite>("국장/leg");
+        headRenderer.sprite = Resources.Load<Sprite>("Samuel/head");
+        bodyRenderer.sprite = Resources.Load<Sprite>("Samuel/body");
+        eyeRenderer.sprite = Resources.Load<Sprite>("Samuel/eye");
+        hairRenderer.sprite = Resources.Load<Sprite>("Samuel/hair");
+        armRenderer.sprite = Resources.Load<Sprite>("Samuel/arm");
+        pantsRenderer.sprite = Resources.Load<Sprite>("Samuel/leg");
     }
 
     public void ChangeToRedType(bool isInstigator)
     {
-        if (isInstigator == false) // 시민만 외형이 바뀜
+        if (isInstigator == false) // Persons만 외형이 바뀜
         {
             bodyRenderer.sprite = Resources.Load<Sprite>("infected");
-            pantsRenderer.sprite = Resources.Load<Sprite>("시민/leg3");
+            pantsRenderer.sprite = Resources.Load<Sprite>("Persons/leg3");
             hairRenderer.color = new Color(0, 0, 0, 1);
         }
 
@@ -112,6 +112,6 @@ public class CharacterVarietyController : MonoBehaviour
     // 티셔츠는 스프라이트 교체
     // 바지도 스프라이트 교체
 
-    // 시위대는 일단 티셔츠 교체만 하고 나중에 시위대 프리팹을 소환하는 걸로 하자
+    // Hooligan는 일단 티셔츠 교체만 하고 나중에 Hooligan 프리팹을 소환하는 걸로 하자
 
 }
