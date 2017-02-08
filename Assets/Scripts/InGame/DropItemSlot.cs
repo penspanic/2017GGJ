@@ -38,7 +38,7 @@ public class DropItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     public void OnPointerEnter(PointerEventData data)
     {
-        if (itemMgr.currentSelect == ItemType.Instigator&&!_myChar.isProtester)
+        if (itemMgr.currentSelect == ItemType.Instigator&&!_myChar.isProtester&&_myChar.isInfected)
         {
             GetComponent<CItemEffectDoumi>().OnpointerEnterAction(_itemeffectRange);
         }
@@ -46,7 +46,7 @@ public class DropItemSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, I
 
     public void OnPointerExit(PointerEventData data)
     {
-        if (itemMgr.currentSelect == ItemType.Instigator&&!_myChar.isProtester)
+        if (itemMgr.currentSelect == ItemType.Instigator&&!_myChar.isProtester&&_myChar.isInfected)
         {
             GetComponent<CItemEffectDoumi>().OnpointerExitAction(_itemeffectRange);
         }

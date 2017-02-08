@@ -9,15 +9,13 @@ public class CItemEffectDoumi : MonoBehaviour
     Character _myChar;
     StageManager _thisStage;
     public GameObject[] neighbors = new GameObject[4];
-    public SpriteRenderer _black;
-    Vector3 _originPos;
+    public SpriteRenderer _green;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake()
     {
         _myChar = GetComponent<Character>();
-        _originPos = transform.position;
     }
     // Use this for initialization
     void Start()
@@ -29,9 +27,9 @@ public class CItemEffectDoumi : MonoBehaviour
     public void OnpointerEnterAction(int count)
     {
 //        Debug.Log(count);
-        if (!_black.enabled&&!_myChar.isProtester)
+        if (!_myChar.isInfected&&!_myChar.isProtester&&!_myChar.isInstigator)
         {
-            _black.enabled = true;
+            _green.enabled = true;
         }
         if (count == 0) return;
         foreach (GameObject item in neighbors)
@@ -41,10 +39,7 @@ public class CItemEffectDoumi : MonoBehaviour
     }
     public void OnpointerExitAction(int count)
     {
-        if (!_myChar.isInfected&&!_myChar.isProtester)
-        {
-            _black.enabled = false;
-        }
+            _green.enabled = false;
         if (count == 0) return;
         foreach (GameObject item in neighbors)
         {

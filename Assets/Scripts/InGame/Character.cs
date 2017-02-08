@@ -97,6 +97,7 @@ public class Character : MonoBehaviour
     void LateUpdate()
     {
         transform.FindChild("Black").position = originalPos;
+        transform.FindChild("Green").position = originalPos;
     }
 
     public void SetCharacterType(CellType cell)
